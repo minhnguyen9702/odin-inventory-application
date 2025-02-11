@@ -7,6 +7,16 @@
 </head>
 <body>
     <%- include('partials/_navbar') %>
-    <p>What's up!</p>
+    <h1>Items List</h1>
+
+    <% if (items && items.length > 0) { %>
+        <ul>
+            <% items.forEach(item => { %>
+                <li><%= item.name %> - <%= item.description %></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No items available.</p>
+    <% } %>
 </body>
 </html>
