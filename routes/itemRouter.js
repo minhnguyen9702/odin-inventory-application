@@ -1,9 +1,9 @@
 const { Router } = require("express");
 
-const indexRouter = Router();
+const itemRouter = Router();
 
-indexRouter.get("/", async (req, res) => {
+itemRouter.get("/", async (req, res) => {
   res.render("index");
 });
 
-module.exports = indexRouter;
+module.exports = itemRouter;
