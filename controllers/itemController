@@ -2,7 +2,7 @@ const db = require("../db/queries.js");
 
 exports.getItems = async (req, res) => {
   try {
-    const items = await db.getAllItems();
+    const items = await db.fetchAllItems();
     res.render("index", { items });
   } catch (error) {
     console.error(error);

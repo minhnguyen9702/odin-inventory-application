@@ -1,18 +1,32 @@
 const pool = require("./pool");
 
-getAllItems = async () => {
+const fetchAllItems = async () => {
   const query = `SELECT * FROM items;`;
   const { rows } = await pool.query(query);
   return rows;
 }
 
-getAllCategories = async () => {
+const fetchAllCategories = async () => {
   const query = 'SELECT * FROM categories;';
   const { rows } = await pool.query(query);
   return rows
 }
 
+const fetchCategoryItems = async (categoryId) => {
+  const query = "SELECT * FROM items WHERE category_id = $1;";
+  const { rows } = await pool.query(query, [categoryId]);
+  return rows;
+};
+
+const fetchCategoryById = async (categoryId) => {
+  const query = "SELECT * FROM categories WHERE id = $1;"
+  const { rows } = await pool.query(query, [categoryId]);
+  return rows[0]
+}
+
 module.exports = {
-  getAllItems,
-  getAllCategories,
+  fetchAllItems,
+  fetchAllCategories,
+  fetchCategoryItems,
+  fetchCategoryById,
 };
