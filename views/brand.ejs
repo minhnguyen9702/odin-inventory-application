@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vintage Clothing Archive</title>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('partials/_navbar') %>
     <h1>Brand List</h1>
 
+    <form action="/brand/create" method="POST">
+        <label for="name">Brand Name:</label>
+        <input type="text" id="name" name="name" required />
+        <button type="submit">Create Brand</button>
+    </form>
+
     <% if (brands && brands.length > 0) { %>
-        <ul>
-            <% brands.forEach(brand => { %>
-                <li><a href="/brand/<%= brand.id %>"><%= brand.name %></a></li>
-            <% }) %>
-        </ul>
+    <ul>
+      <% brands.forEach(brand => { %>
+      <li><a href="/brand/<%= brand.id %>"><%= brand.name %></a></li>
+      <% }) %>
+    </ul>
     <% } else { %>
-        <p>No brands available.</p>
+    <p>No brands available.</p>
     <% } %>
-</body>
+  </body>
 </html>

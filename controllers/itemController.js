@@ -16,15 +16,9 @@ exports.getItems = async (req, res) => {
 
 exports.getItemCloseup = async (req, res) => {
   try {
-    console.log('req.params:', req.params);  // Log the entire params object
-
-    const { id } = req.params;  // Extract 'id' from the URL parameters
-    console.log('Item ID:', id);  // Log the extracted 'id'
-
-    const item = await db.fetchItemById(id);  // Fetch the item using the 'id'
-    console.log('Item:', item);  // Log the fetched item data
-
-    res.render('itemCloseup', { item });  // Render the item close-up view
+    const { id } = req.params;
+    const item = await db.fetchItemById(id);
+    res.render('itemCloseup', { item });
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");

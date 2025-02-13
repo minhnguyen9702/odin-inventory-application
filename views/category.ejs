@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vintage Clothing Archive</title>
-</head>
-<body>
+  </head>
+  <body>
     <%- include('partials/_navbar') %>
     <h1>Categories List</h1>
 
+    <form action="/category/create" method="POST">
+        <label for="name">Category Name:</label>
+        <input type="text" id="name" name="name" required />
+        <button type="submit">Create Category</button>
+    </form>
+
     <% if (categories && categories.length > 0) { %>
-        <ul>
-            <% categories.forEach(category => { %>
-                <li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
-            <% }) %>
-        </ul>
+    <ul>
+      <% categories.forEach(category => { %>
+      <li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
+      <% }) %>
+    </ul>
     <% } else { %>
-        <p>No categories available.</p>
+    <p>No categories available.</p>
     <% } %>
-</body>
+  </body>
 </html>

@@ -103,6 +103,18 @@ const deleteItem = async (item_id) => {
   }
 };
 
+const addBrand = async (brandName) => {
+  const query = `INSERT INTO brands (name) VALUES ($1)
+  ON CONFLICT (name) DO NOTHING;`;
+  
+  try {
+    await pool.query(query, [brandName]);
+    console.log("Brand added successfully");
+  } catch (error) {
+    console.error("Error adding brand:", error);
+  }
+};
+
 module.exports = {
   fetchAllItems,
   fetchItemById,
@@ -114,4 +126,5 @@ module.exports = {
   fetchBrandById,
   addItem,
   deleteItem,
+  addBrand,
 };

@@ -30,3 +30,14 @@ exports.getBrandItems = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+exports.createBrand = async (req, res) => {
+  try {
+    const { name } = req.body;
+    await db.addBrand(name);
+    res.redirect("/brand")
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
