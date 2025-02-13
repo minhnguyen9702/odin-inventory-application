@@ -24,9 +24,16 @@ const fetchCategoryById = async (categoryId) => {
   return rows[0]
 }
 
+const fetchAllBrands = async () => {
+  const query = 'SELECT * FROM brands;';
+  const { rows } = await pool.query(query);
+  return rows
+}
+
 module.exports = {
   fetchAllItems,
   fetchAllCategories,
   fetchCategoryItems,
   fetchCategoryById,
+  fetchAllBrands,
 };

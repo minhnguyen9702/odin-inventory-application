@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", itemRouter);
-app.use("/", brandRouter);
+app.use("/brand", brandRouter);
 app.use("/category", categoryRouter);
 
 const PORT = process.env.PORT || 3000;
