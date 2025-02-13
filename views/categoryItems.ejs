@@ -12,7 +12,12 @@
     <% if (items.length > 0) { %>
         <ul>
             <% items.forEach(item => { %>
-                <li><%= item.name %> - <%= item.description %></li>
+                <li><a href="/item/<%= item.id %>"><%= item.name %></a> %>
+                    <form action="/item/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="item_id" value="<%= item.id %>">
+                        <button type="submit" onclick="return confirmDelete()">Delete Item</button>
+                    </form>
+                </li>
             <% }) %>
         </ul>
     <% } else { %>
