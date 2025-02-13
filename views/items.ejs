@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= category.name %></title>
+    <title>Vintage Clothing Archive</title>
 </head>
 <body>
     <%- include('partials/_navbar') %>
-    <h1><%= category.name %></h1>
+    <h1>Items List</h1>
 
-    <% if (items.length > 0) { %>
+    <% if (items && items.length > 0) { %>
         <ul>
             <% items.forEach(item => { %>
                 <li><%= item.name %> - <%= item.description %></li>
             <% }) %>
         </ul>
     <% } else { %>
-        <p>No items found in this category.</p>
+        <p>No items available.</p>
     <% } %>
-
-    <a href="/category">Back to Categories</a>
 </body>
 </html>
