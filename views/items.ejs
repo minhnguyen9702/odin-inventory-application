@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vintage Clothing Archive</title>
+        <script>
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this item?');
+        }
+    </script>
 </head>
 <body>
     <%- include('partials/_navbar') %>
     <h1>Items List</h1>
+    <a href="/item/new">Add New Item</a>
 
     <% if (items && items.length > 0) { %>
         <ul>
             <% items.forEach(item => { %>
-                <li><%= item.name %> - <%= item.description %></li>
+                <li><%= item.name %> - <%= item.description %>
+                    <form action="/items/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="item_id" value="<%= item.id %>">
+                        <button type="submit" onclick="return confirmDelete()">Delete Item</button>
+                    </form>
+                </li>
             <% }) %>
         </ul>
     <% } else { %>

@@ -4,13 +4,13 @@ const fetchAllItems = async () => {
   const query = `SELECT * FROM items;`;
   const { rows } = await pool.query(query);
   return rows;
-}
+};
 
 const fetchAllCategories = async () => {
-  const query = 'SELECT * FROM categories;';
+  const query = "SELECT * FROM categories;";
   const { rows } = await pool.query(query);
-  return rows
-}
+  return rows;
+};
 
 const fetchCategoryItems = async (categoryId) => {
   const query = "SELECT * FROM items WHERE category_id = $1;";
@@ -19,16 +19,16 @@ const fetchCategoryItems = async (categoryId) => {
 };
 
 const fetchCategoryById = async (categoryId) => {
-  const query = "SELECT * FROM categories WHERE id = $1;"
+  const query = "SELECT * FROM categories WHERE id = $1;";
   const { rows } = await pool.query(query, [categoryId]);
-  return rows[0]
-}
+  return rows[0];
+};
 
 const fetchAllBrands = async () => {
-  const query = 'SELECT * FROM brands;';
+  const query = "SELECT * FROM brands;";
   const { rows } = await pool.query(query);
-  return rows
-}
+  return rows;
+};
 
 const fetchBrandItems = async (brandId) => {
   const query = "SELECT * FROM items WHERE brand_id = $1;";
@@ -37,10 +37,51 @@ const fetchBrandItems = async (brandId) => {
 };
 
 const fetchBrandById = async (brandId) => {
-  const query = "SELECT * FROM brands WHERE id = $1;"
+  const query = "SELECT * FROM brands WHERE id = $1;";
   const { rows } = await pool.query(query, [brandId]);
-  return rows[0]
-}
+  return rows[0];
+};
+
+const addItem = async (name, brand_id, category_id, year, description, image_url) => {
+  const query = `
+    INSERT INTO items (name, brand_id, category_id, year, description, image_url)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING id;
+  `;
+  
+  const values = [name, brand_id, category_id, year, description, image_url];
+  
+  try {
+    const result = await pool.query(query, values);
+    return result.rows[0].id;  // Return the inserted item's ID
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to add item to database");
+  }
+};
+
+const deleteItem = async (item_id) => {
+  const query = `
+    DELETE FROM items
+    WHERE id = $1
+    RETURNING id;
+  `;
+  
+  const values = [item_id];
+  
+  try {
+    const result = await pool.query(query, values);
+    
+    // If no item was deleted, result.rows will be empty
+    if (result.rows.length === 0) {
+      throw new Error("Item not found");
+    }
+    return result.rows[0].id;  // Return the deleted item's ID
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to delete item from database");
+  }
+};
 
 module.exports = {
   fetchAllItems,
@@ -50,4 +91,6 @@ module.exports = {
   fetchAllBrands,
   fetchBrandItems,
   fetchBrandById,
+  addItem,
+  deleteItem,
 };
