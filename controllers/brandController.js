@@ -41,3 +41,15 @@ exports.createBrand = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+exports.removeBrand = async (req, res) => {
+  try {
+    const { brand_id } = req.body;
+    await db.deleteBrand(brand_id);
+    res.redirect('/brand');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+

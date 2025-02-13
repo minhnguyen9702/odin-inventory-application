@@ -106,12 +106,32 @@ const deleteItem = async (item_id) => {
 const addBrand = async (brandName) => {
   const query = `INSERT INTO brands (name) VALUES ($1)
   ON CONFLICT (name) DO NOTHING;`;
-  
+
   try {
     await pool.query(query, [brandName]);
     console.log("Brand added successfully");
   } catch (error) {
     console.error("Error adding brand:", error);
+  }
+};
+
+const deleteBrand = async (brandId) => {
+  const deleteItemsQuery = `
+  DELETE FROM items
+  WHERE brand_id = $1
+  RETURNING id;`;
+
+  const deleteBrandQuery = `
+  DELETE FROM brands
+  WHERE id = $1
+  RETURNING id;`;
+
+  try {
+    await pool.query(deleteItemsQuery, [brandId])
+    await pool.query(deleteBrandQuery, [brandId]);
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to delete brand and associated items");
   }
 };
 
@@ -127,4 +147,5 @@ module.exports = {
   addItem,
   deleteItem,
   addBrand,
+  deleteBrand,
 };
