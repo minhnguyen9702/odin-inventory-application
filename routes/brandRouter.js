@@ -1,7 +1,8 @@
 const { Router } = require("express");
-const categoryController = require("../controllers/brandController");
+const brandController = require("../controllers/brandController");
 const brandRouter = Router();
 
-brandRouter.get('/', categoryController.getBrands)
+brandRouter.get('/', brandController.getBrands)
+brandRouter.get('/:id', brandController.getBrandItems)
 
 module.exports = brandRouter;

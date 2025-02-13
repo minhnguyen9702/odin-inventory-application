@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= brand.name %> Items</title>
+</head>
+<body>
+    <%- include('partials/_navbar') %>
+    <h1><%= brand.name %> Items</h1>
+
+    <% if (items.length > 0) { %>
+        <ul>
+            <% items.forEach(item => { %>
+                <li><%= item.name %> - <%= item.description %></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No items found in this brand.</p>
+    <% } %>
+
+    <a href="/brand">Back to Brands</a>
+</body>
+</html>

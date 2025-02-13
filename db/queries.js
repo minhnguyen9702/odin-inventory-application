@@ -30,10 +30,24 @@ const fetchAllBrands = async () => {
   return rows
 }
 
+const fetchBrandItems = async (brandId) => {
+  const query = "SELECT * FROM items WHERE brand_id = $1;";
+  const { rows } = await pool.query(query, [brandId]);
+  return rows;
+};
+
+const fetchBrandById = async (brandId) => {
+  const query = "SELECT * FROM brands WHERE id = $1;"
+  const { rows } = await pool.query(query, [brandId]);
+  return rows[0]
+}
+
 module.exports = {
   fetchAllItems,
   fetchAllCategories,
   fetchCategoryItems,
   fetchCategoryById,
   fetchAllBrands,
+  fetchBrandItems,
+  fetchBrandById,
 };
