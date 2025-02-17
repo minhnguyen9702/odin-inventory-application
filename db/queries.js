@@ -127,7 +127,7 @@ const deleteBrand = async (brandId) => {
   RETURNING id;`;
 
   try {
-    await pool.query(deleteItemsQuery, [brandId])
+    await pool.query(deleteItemsQuery, [brandId]);
     await pool.query(deleteBrandQuery, [brandId]);
   } catch (err) {
     console.error(err);
@@ -159,7 +159,7 @@ const deleteCategory = async (categoryId) => {
   RETURNING id;`;
 
   try {
-    await pool.query(deleteItemsQuery, [categoryId])
+    await pool.query(deleteItemsQuery, [categoryId]);
     await pool.query(deleteCategoryQuery, [categoryId]);
   } catch (err) {
     console.error(err);
@@ -167,6 +167,11 @@ const deleteCategory = async (categoryId) => {
   }
 };
 
+const searchItems = async (searchTerm) => {
+  const query = `SELECT * FROM items WHERE name ILIKE $1 OR description ILIKE $1`;
+  const { rows } = await pool.query(query, [`%${searchTerm}%`]);
+  return rows;
+};
 
 module.exports = {
   fetchAllItems,
@@ -183,4 +188,5 @@ module.exports = {
   deleteBrand,
   addCategory,
   deleteCategory,
+  searchItems,
 };

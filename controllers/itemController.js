@@ -67,3 +67,14 @@ exports.removeItem = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+exports.findItems = async (req, res) => {
+  try {
+    const searchTerm = req.query.search || "";
+    const items = await db.searchItems(searchTerm)
+    res.render("searchedItems", {items, searchTerm})
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
