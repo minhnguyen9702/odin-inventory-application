@@ -30,3 +30,25 @@ exports.getCategoryItems = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+exports.createCategory = async (req, res) => {
+  try {
+    const { name } = req.body;
+    await db.addCategory(name);
+    res.redirect("/category")
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.removeCategory = async (req, res) => {
+  try {
+    const { category_id } = req.body;
+    await db.deleteCategory(category_id);
+    res.redirect('/category');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};

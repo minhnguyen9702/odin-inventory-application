@@ -135,6 +135,39 @@ const deleteBrand = async (brandId) => {
   }
 };
 
+const addCategory = async (categoryName) => {
+  const query = `INSERT INTO categories (name) VALUES ($1)
+  ON CONFLICT (name) DO NOTHING;`;
+
+  try {
+    await pool.query(query, [categoryName]);
+    console.log("Category added successfully");
+  } catch (error) {
+    console.error("Error adding category:", error);
+  }
+};
+
+const deleteCategory = async (categoryId) => {
+  const deleteItemsQuery = `
+  DELETE FROM items
+  WHERE category_id = $1
+  RETURNING id;`;
+
+  const deleteCategoryQuery = `
+  DELETE FROM categories
+  WHERE id = $1
+  RETURNING id;`;
+
+  try {
+    await pool.query(deleteItemsQuery, [categoryId])
+    await pool.query(deleteCategoryQuery, [categoryId]);
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to delete category and associated items");
+  }
+};
+
+
 module.exports = {
   fetchAllItems,
   fetchItemById,
@@ -148,4 +181,6 @@ module.exports = {
   deleteItem,
   addBrand,
   deleteBrand,
+  addCategory,
+  deleteCategory,
 };

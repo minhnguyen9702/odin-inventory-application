@@ -4,21 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vintage Clothing Archive</title>
+    <script>
+      function confirmDelete() {
+        return confirm("Are you sure you want to delete this item?");
+      }
+    </script>
   </head>
   <body>
     <%- include('partials/_navbar') %>
     <h1>Categories List</h1>
 
     <form action="/category/create" method="POST">
-        <label for="name">Category Name:</label>
-        <input type="text" id="name" name="name" required />
-        <button type="submit">Create Category</button>
+      <label for="name">Category Name:</label>
+      <input type="text" id="name" name="name" required />
+      <button type="submit">Create Category</button>
     </form>
 
     <% if (categories && categories.length > 0) { %>
     <ul>
       <% categories.forEach(category => { %>
-      <li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
+      <li>
+        <a href="/category/<%= category.id %>"><%= category.name %></a>
+        <form action="/category/delete" method="POST" style="display: inline">
+          <input type="hidden" name="category_id" value="<%= category.id %>" />
+          <button type="submit" onclick="return confirmDelete()">
+            Delete Category
+          </button>
+        </form>
+      </li>
       <% }) %>
     </ul>
     <% } else { %>

@@ -61,7 +61,7 @@ exports.removeItem = async (req, res) => {
   try {
     const { item_id } = req.body;
     await db.deleteItem(item_id);
-    res.redirect('/item');
+    res.redirect('/items');
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");
